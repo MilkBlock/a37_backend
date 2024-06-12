@@ -1,0 +1,20 @@
+<table>
+    <thead>
+        <tr>
+            <th>uid</th>
+            <th>iswx</th>
+            <th>iszfb</th>
+            <th>uname</tr>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.uid }}</td>
+            <td>{{ record.iswx }}</td>
+            <td>{{ record.iszfb }}</td>
+            <td>{{ record.uname }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -11,12 +11,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os,sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#加入a37 textcnn 包路径
+# sys.path.append(os.path.join(BASE_DIR,"A37TextCNN")) 
+TEMPLATES_DIR = Path(BASE_DIR,"Templates")
+STATIC_URL = "/static/"
+STATIC_ROOT = Path(BASE_DIR,"static/")
 
 
-# Quick-start development settings - unsuitable for production
+
+
+# Quick-start development settings - /unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -25,24 +33,39 @@ SECRET_KEY = "django-insecure-fwvw-0_=he)3e)wk1@g&b@u^52ykf!0t51at3gc3x(ktg_4-m^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ["127.0.0.1" , "1.13.2.149"]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["127.0.0.1" ,"localhost", "1.13.2.149","mineralsteins.icu"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "django_extensions",
+    "corsheaders",
+    "django.contrib.staticfiles",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
     "drf_yasg2",
+    "rest_framework",
+    # "A37TextCNN",
     "A37",
+#    "ws_rotate"
+#    "channels",
 ]
 
+# csp 基本变量
+# Content Security Policy
+# CSP_IMG_SRC = ("'self'")
+# CSP_STYLE_SRC = ("'self'")
+# CSP_SCRIPT_SRC = ("'self'")
+
 MIDDLEWARE = [
+    #'csp.middleware.CSPMiddleware',      # 这是csp协议所在的Python包
+    #'utils.my_middleware.ExceptionLoggingMiddleware',
+    # 跨域相关
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,12 +75,25 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CORS_ALLOWED_ORIGINS= ["http://localhost:8080","http://localhost:8081",
+                       "https://localhost","https://localhost:8081","http://localhost"]
+
+CORS_ALLOW_METHODS = (
+ 'DELETE',
+ 'GET',
+ 'OPTIONS',
+ 'PATCH',
+ 'POST',
+ 'PUT',
+ 'VIEW',
+)
+
 ROOT_URLCONF = "Site.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR,"templates",],
+        "DIRS": [BASE_DIR,TEMPLATES_DIR,"Templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -71,7 +107,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Site.wsgi.application"
-
+#ASGI_APPLICATION = "Site.asgi.application"
+#CHANNEL_LAYERS = {
+#    "default": {
+#        "BACKEND": "channels_redis.core.RedisChannelLayer",
+#        "CONFIG": {
+#            "hosts": [("127.0.0.1", 6379)],
+#        },
+#    },
+#}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -81,8 +125,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "USER" : "root",
         # "NAME": BASE_DIR / "A37",
-        "NAME": "A37",
-        "PASSWORD":"HJR104451639",
+        "NAME": "a37",
+        "PASSWORD":"System.exit(0);",
         "PORT" : 3306  
     }
 }
@@ -112,7 +156,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 
@@ -122,7 +166,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
 
 # Default primary key field type
 
@@ -130,3 +173,12 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+
+
+# 额外配置代码
+# import sys,os
+# log_file = open(os.path.join(STATIC_ROOT,"console.log"),"a")
+# sys.stdout = log_file

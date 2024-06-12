@@ -1,0 +1,1 @@
+{"O": 0, "B-TIME": 1, "M-TIME": 2, "E-TIME": 3, "B-PLACE": 4, "E-PLACE": 5, "B-AMOUNT": 6, "M-AMOUNT": 7, "E-AMOUNT": 8, "<END>": 9, "M-PLACE": 10, "<PAD>": 11, "<START>": 12}

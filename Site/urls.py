@@ -13,9 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf.urls import static
+from Site import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+# djangousrls  django.contrib.admin django.http django.shortcuts
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-]
+    path(r"a37/",include("A37.urls")),
+    # path(r"static/a37/avatar_images/(?P<filename>.*)",views.serve_avatar_images),
+] + static.static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)
+
+
